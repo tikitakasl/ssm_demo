@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.better.dao.CatDao">
+    <select id="selectAll" resultType="cat">
+    select cat_id,cat_name,cat_img,
+        IF(DATE_FORMAT(NOW(),'%H') - DATE_FORMAT(cat_eat,'%H') >= 1,'yes','no') as cat_status
+    from t_cat
+  </select>
+
+    <insert id="insertCat" parameterType="cat">
+        insert into t_cat(cat_name,cat_eat,cat_img) values (#{cat_name},#{cat_eat},#{cat_img})
+    </insert>
+
+    <update id="updateCat" parameterType="cat">
+        UPDATE t_cat
+        <set>
+            <if test="cat_name != null and cat_name !=''" >
+                cat_name = #{cat_name},
+            </if>
+            <if test="cat_img != null and cat_img !=''" >
+                cat_img = #{cat_img},
+            </if>
+            <if test="cat_eat != null and cat_eat !=''" >
+                cat_eat = #{cat_eat},
+            </if>
+        </set>
+        where cat_id = #{cat_id}
+
+    </update>
+
+    <delete id="deleteCat" parameterType="cat">
+        delete from t_cat where cat_id = #{cat_id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <span v-text="msg"></span>
+        <span v-html="tagTest"></span>
+        <span v-pre>{{msg}}</span><br>
+        <span v-once>{{msg}}</span><br>
+        <button @click="say('VUE')">VUE</button>
+        <h1>123</h1>
+        <input type="text" v-model="numA">
+        <input type="text" v-model="numB">
+        <button @click="sum">SUM</button>
+        <span v-text="SUM"></span>
+    </div>
+
+</body>
+<script src="./js/vue.js"></script>
+<script type="text/javascript">
+    var app = new Vue({
+        el: '#app',
+        data: {
+            numA: '',
+            numB: '',
+            SUM : '',
+            msg: 'Hello Vue!',
+            tagTest: '<h1>TEST</h1>'
+        },
+        methods:{
+            say : function (test){
+                this.msg = test
+            },
+            sum : function (){
+                this.SUM = parseInt(this.numA) + parseInt(this.numB)
+            }
+        }
+    });
+    </script>
+</html>
