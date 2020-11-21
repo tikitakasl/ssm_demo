@@ -62,7 +62,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-<script type="application/javascript">
+<script>
     var app = new Vue({
         el:"#app",
         data:{
@@ -74,7 +74,7 @@
         methods:{
             findPage: function () {
                 axios.defaults.withCredentials = true;
-                axios.get("http://localhost:8080/cat/findAll.do").then(res=>{
+                axios.get("http://localhost:8080/cat.do").then(res=>{
                     if (res.data.flag){
                         this.cat_list = res.data.data;
                     }else {
@@ -88,7 +88,7 @@
                 var flag = confirm("Real delete Cat?");
                 if (flag){
                     axios.defaults.withCredentials = true;
-                    axios.get("http://localhost:8080/cat/delete.do?cat_id="+id).then(res=>{
+                    axios.delete("http://localhost:8080/cat/"+id+".do").then(res=>{
                         if (res.data.flag){
                             this.findPage();
                         }else {
@@ -101,7 +101,7 @@
             },
             giveFood: function (id){
                 axios.defaults.withCredentials = true;
-                axios.get("http://localhost:8080/cat/food.do?cat_id="+id).then(res=>{
+                axios.put("http://localhost:8080/cat/"+id+".do").then(res=>{
                     if (res.data.flag){
                         this.findPage();
                     }else {
@@ -116,10 +116,6 @@
                 this.cat_id = cat_id;
                 this.cat_name = cat_name;
                 $('#myModal').modal('show');
-            },
-            edit_cat: function () {
-                $('#updateform').submit();
-                this.findPage();
             },
             getFile: function(event){
                 this.file = event.target.files[0];
@@ -138,7 +134,7 @@
                     }
                 }
                 axios.defaults.withCredentials = true;
-                axios.post('http://localhost:8080/cat/edit.do', formData, config).then(res=>{
+                axios.post('http://localhost:8080/cat.do', formData, config).then(res=>{
                     if (res.data.flag) {
                         $("#closeBtn").click();
                         this.findPage();

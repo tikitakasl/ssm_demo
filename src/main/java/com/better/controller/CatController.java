@@ -23,24 +23,27 @@ public class CatController {
     @Autowired
     private CatService catService;
 
-    @GetMapping("/findAll")
+    @GetMapping()
     public Result findAll(){
         return catService.findAll();
     }
 
 
-    @GetMapping("/delete")
-    public Result delete(Cat cat){
+    @DeleteMapping("/{cat_id}")
+    public Result delete(@PathVariable("cat_id") Integer cat_id){
 
+        Cat cat = new Cat();
+        cat.setCat_id(cat_id);
         catService.deleteCat(cat);
 
         Result result = new Result();
         result.setFlag(true);
         return result;
     }
-    @GetMapping("/food")
-    public Result edit(Cat cat){
-
+    @PutMapping("/{cat_id}")
+    public Result edit(@PathVariable("cat_id") Integer cat_id){
+        Cat cat = new Cat();
+        cat.setCat_id(cat_id);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String now = dateFormat.format(new Date());
         cat.setCat_eat(now);
@@ -51,7 +54,7 @@ public class CatController {
         return result;
     }
 
-    @PostMapping("/edit")
+    @PostMapping()
     public Result edit(HttpServletRequest request,
                        HttpServletResponse response,
                        HttpSession session,

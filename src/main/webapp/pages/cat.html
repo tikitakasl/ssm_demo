@@ -74,7 +74,7 @@
         methods:{
             findPage: function () {
                 axios.defaults.withCredentials = true;
-                axios.get("http://localhost:8080/cat/findAll.do").then(res=>{
+                axios.get("http://localhost:8080/cat.do").then(res=>{
                     if (res.data.flag){
                         this.cat_list = res.data.data;
                     }else {
@@ -88,7 +88,7 @@
                 var flag = confirm("Real delete Cat?");
                 if (flag){
                     axios.defaults.withCredentials = true;
-                    axios.get("http://localhost:8080/cat/delete.do?cat_id="+id).then(res=>{
+                    axios.delete("http://localhost:8080/cat/"+id+".do").then(res=>{
                         if (res.data.flag){
                             this.findPage();
                         }else {
@@ -101,7 +101,7 @@
             },
             giveFood: function (id){
                 axios.defaults.withCredentials = true;
-                axios.get("http://localhost:8080/cat/food.do?cat_id="+id).then(res=>{
+                axios.put("http://localhost:8080/cat/"+id+".do").then(res=>{
                     if (res.data.flag){
                         this.findPage();
                     }else {
@@ -134,7 +134,7 @@
                     }
                 }
                 axios.defaults.withCredentials = true;
-                axios.post('http://localhost:8080/cat/edit.do', formData, config).then(res=>{
+                axios.post('http://localhost:8080/cat.do', formData, config).then(res=>{
                     if (res.data.flag) {
                         $("#closeBtn").click();
                         this.findPage();
